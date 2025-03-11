@@ -49,7 +49,16 @@ export async function sendNOSTRMessage(userPubKey: string, orderId: string): Pro
   const normalizedPubkey = await normalizePubkey(userPubKey);
   // Create QR
   const qrContent = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(orderId)}&size=200x200`;
-  const message = `Tu código de ticket es: ${orderId}\nEscanea este QR en la puerta de La Crypta para el check-in: ${qrContent}`;
+  const message = `
+  ¡Tu ticket para el Martes de Cowork de La Crypta!
+  \n
+  🎟 Código de ticket: 
+  ${orderId}
+  \n
+  🔍 Escanea este QR para el check-in:
+  ${qrContent}
+  \n
+  ¡Gracias por tu colaboración! 🫡`;
 
   // Encrypt message
   const encryptedContent = await nip04.encrypt(decodedPrivateKey, normalizedPubkey, message);
