@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     NEXT_PLUNK_API_KEY: process.env.PLUNK_API_KEY,
     NEXT_LN_ADDRESS: process.env.LN_ADDRESS,
     NEXT_CHECKIN_PASSWORD: process.env.CHECKIN_PASSWORD,
+    NEXT_NOSTR_PRIVATE_KEY: process.env.NOSTR_PRIVATE_KEY,
   },
   images: {
     remotePatterns: [

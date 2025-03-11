@@ -19,15 +19,17 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '../ui/card';
 import { ProductType, StoreType } from '@/types';
 import { sendEmail } from '@/lib/actions/email';
+import { sendNOSTRMessage } from '@/lib/actions/nostr';
 
 type InformationProps = {
   store: StoreType;
   disabled: boolean;
   onComplete: (id: any) => void;
   onEmail: (email: string) => void;
+  onPubKey: (pubkey: string) => void;
 };
 
-export function Information({ onComplete, onEmail, disabled, store }: InformationProps) {
+export function Information({ onComplete, onEmail, onPubKey, disabled, store }: InformationProps) {
   const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState('');
@@ -47,6 +49,7 @@ export function Information({ onComplete, onEmail, disabled, store }: Informatio
 
     onComplete(id);
     onEmail(email);
+    onPubKey(pubkey);
   }
 
   return (
@@ -111,14 +114,11 @@ export function Information({ onComplete, onEmail, disabled, store }: Informatio
         <Button
           className='w-full hover:bg-purple-700 hover:text-white'
           variant='outline'
-          title='👷 Devs trabajando en esta funcion.'
+          //title='👷 Devs trabajando en esta funcion.'
           onClick={() => {
-            // Mostrar mensaje al usuario
-            alert('👷 Devs trabajando en esta funcion.');
-            // Opcional: No ejecutar la lógica original mientras esté deshabilitado
-            // setName('');
-            // setEmail('');
-            // setVariant('pubkey');
+            setName('');
+            setEmail('');
+            setVariant('pubkey');
         }}
         >
           Continua con Nostr
@@ -244,6 +244,7 @@ export function CustomAccordion(props: CustomAccordion) {
   const [invoice, setInvoice] = useState<string>('');
   const [verify, setVerify] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [pubkey, setPubkey] = useState<string>('');
 
   const price = product?.price * quantity;
 
@@ -255,11 +256,13 @@ export function CustomAccordion(props: CustomAccordion) {
           
           if (email) {
             await sendEmail(email, orderId);
-            console.log('Correo enviado exitosamente a:', email);
-          } else {
-            console.warn('No hay email registrado para enviar confirmación');
+          } 
+          else if (pubkey) {
+            await sendNOSTRMessage(pubkey,orderId);
           }
-          
+          else {
+            throw new Error('There is no email or pubkey to send the ticket!');
+          }
           handleComplete('payment');
         } catch (error) {
           console.error('Error en confirmación de pago:', error);
@@ -325,6 +328,7 @@ export function CustomAccordion(props: CustomAccordion) {
             store={store}
             disabled={readOnly}
             onEmail={setEmail}
+            onPubKey={setPubkey}
             onComplete={async (id) => {
               const _id = await addOrder({
                 customer_id: id,
