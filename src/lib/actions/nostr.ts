@@ -8,7 +8,7 @@ const RELAYS = [
   'wss://relay.damus.io',
 ];
 
-// Validar y decodificar la clave privada desde .env
+// Crash if there isn't NOSTR private key declared in .env
 if (!process.env.NEXT_NOSTR_PRIVATE_KEY) {
   throw new Error('NEXT_NOSTR_PRIVATE_KEY environment variable is not set');
 }
@@ -23,15 +23,15 @@ const senderPublicKey = getPublicKey(Uint8Array.from(Buffer.from(decodedPrivateK
 // Turn NIP-05 to hex
 async function resolveNIP05(nip05: string): Promise<string> {
   const [localPart, domain] = nip05.split('@');
-  if (!localPart || !domain) throw new Error('Formato NIP-05 inválido');
+  if (!localPart || !domain) throw new Error('NIP-05 format invalid');
 
   const url = `https://${domain}/.well-known/nostr.json?name=${encodeURIComponent(localPart)}`;
   const response = await fetch(url);
-  if (!response.ok) throw new Error(`Error al consultar NIP-05: ${response.statusText}`);
+  if (!response.ok) throw new Error(`Response error in NIP-05: ${response.statusText}`);
 
   const data = await response.json();
   const pubkey = data.names?.[localPart];
-  if (!pubkey || !/^[0-9a-fA-F]{64}$/.test(pubkey)) throw new Error('Pubkey no encontrada o inválida en NIP-05');
+  if (!pubkey || !/^[0-9a-fA-F]{64}$/.test(pubkey)) throw new Error('Invalid or not found pubkey in NIP-05');
   return pubkey;
 }
 
@@ -40,7 +40,7 @@ async function normalizePubkey(input: string): Promise<string> {
   if (/^[0-9a-fA-F]{64}$/.test(input)) return input;
   if (input.startsWith('npub')) return nip19.decode(input).data as string;
   if (input.includes('@')) return await resolveNIP05(input);
-  throw new Error('Formato de pubkey no soportado: debe ser hex, npub o NIP-05');
+  throw new Error('Pubkey format unsupported: should be hex, npub o NIP-05');
 }
 
 // Send NOSTR message
@@ -85,13 +85,13 @@ export async function sendNOSTRMessage(userPubKey: string, orderId: string): Pro
 
     const success = results.some(result => result.status === 'fulfilled');
     if (success) {
-      console.log(`Mensaje enviado exitosamente a ${normalizedPubkey} vía pool de relays`);
+      console.log(`Message sent successfully at ${normalizedPubkey} via pool of relays`);
       return true;
     } else {
-      throw new Error('Ningún relay aceptó el evento');
+      throw new Error('Event rejected by all the relays');
     }
   } catch (error) {
-    console.error('Error general enviando mensaje:', error);
+    console.error('General error trying to send the message:', error);
     throw error;
   } finally {
     pool.close(RELAYS);
