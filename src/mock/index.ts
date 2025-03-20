@@ -2,8 +2,8 @@ export const STORE = {
   id: 'company-1',
   // image: show image 48x48
   image: 'images/logo.png',
-  name: 'La Crypta |🇦🇷',
-  website: 'https://x.com/lacryptaok',
+  name: 'Bitcoin Mendoza |🇦🇷',
+  website: 'https://t.me/bitcoinmendoza',
   lnaddress: process.env.NEXT_LN_ADDRESS,
 };
 
@@ -20,7 +20,7 @@ export const PRODUCT = {
   id: 'Cowork ticket',
   // image: 4/3 aspect ratio
   image:
-    'images/banner3.png',
+    'images/btc-pizza-day.webp',
   name: `Bitcoin Pizza Day 🍕 Mendoza 2025`,
   description: `¡Celebra el Bitcoin Pizza Day 2025 en Mendoza!
 Únete a nosotros el 22/05 en [lugar] para conmemorar el histórico día en que se compraron las primeras pizzas pagando con Bitcoin. Disfruta de una tarde llena de pizza, charlas sobre Bitcoin, Nostr y Lightning Network, además networking entre bitcoiners y actividades especiales.

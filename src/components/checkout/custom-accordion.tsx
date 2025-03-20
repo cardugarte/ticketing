@@ -97,7 +97,8 @@ export function Information({ onComplete, onEmail, onPubKey, disabled, store }: 
         )}
         <Button
           className='w-full hover:bg-green-400'
-          disabled={(variant === 'email' ? !name || !email : !pubkey) || loading || disabled}
+          // disabled={(variant === 'email' ? !name || !email : !pubkey) || loading || disabled}
+          disabled={true}
           type='submit'
         >
           Pagar {loading && <LoaderCircle className='size-8 animate-spin' />}
@@ -114,12 +115,13 @@ export function Information({ onComplete, onEmail, onPubKey, disabled, store }: 
         <Button
           className='w-full hover:bg-purple-700 hover:text-white'
           variant='outline'
+          disabled={true}
           //title='👷 Devs trabajando en esta funcion.'
           onClick={() => {
             setName('');
             setEmail('');
             setVariant('pubkey');
-        }}
+          }}
         >
           Continua con Nostr
         </Button>
@@ -253,12 +255,12 @@ export function CustomAccordion(props: CustomAccordion) {
       if (isPaid) {
         try {
           await modifyOrder(orderId);
-          
+
           if (email) {
             await sendEmail(email, orderId);
-          } 
+          }
           else if (pubkey) {
-            await sendNOSTRMessage(pubkey,orderId);
+            await sendNOSTRMessage(pubkey, orderId);
           }
           else {
             throw new Error('There is no email or pubkey to send the ticket!');
@@ -269,7 +271,7 @@ export function CustomAccordion(props: CustomAccordion) {
         }
       }
     };
-  
+
     if (orderId && verify) {
       listenPayment({
         verifyUrl: verify,
