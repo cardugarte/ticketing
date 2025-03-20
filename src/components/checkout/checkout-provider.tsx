@@ -12,6 +12,7 @@ import { CustomAccordion } from './custom-accordion';
 
 import { StoreType, ProductType } from '@/types';
 import { Skeleton } from '../ui/skeleton';
+import Image from 'next/image';
 
 export function CheckoutProvider({
   store,
@@ -61,7 +62,7 @@ export function CheckoutProvider({
           <div className='flex flex-col gap-6'>
             <div className='flex flex-col gap-4'>
               <div className='flex justify-between items-center'>
-                <h1 className='font-semibold tracking-tighter text-balance'>{product?.name}</h1>
+                <h1 className='font-semibold tracking-normal text-balance uppercase'>{product?.name}</h1>
                 {/* {product?.variants?.length === 0 && ( */}
                 <p className='flex items-center text-lg tracking-tighter text-balance'>
                   <SatoshiV2Icon className='w-4 h-4' />
@@ -100,15 +101,15 @@ export function CheckoutProvider({
               </div>
               {readOnly && !product?.image && <Skeleton className='w-full h-[280px] bg-gray-200 rounded-xl' />}
               {product?.image && (
-                <div className='relative overflow-hidden flex justify-center items-center max-h-[280px] rounded-xl'>
-                  <img src={product?.image} alt={product?.name} />
+                <div className='relative overflow-hidden flex justify-center items-center max-h-[380px] rounded-xl'>
+                  <Image width={380} height={380} className='w-full h-full object-cover' src={`/${product?.image}`} alt={product?.name} />
                 </div>
               )}
 
               {readOnly && !product?.description && <Skeleton className='w-[220px] h-[14px] bg-gray-200 rounded-xl' />}
               {product?.description && (
                 <div className='flex flex-col gap-4'>
-                  <p className='text-sm' dangerouslySetInnerHTML={{ __html: product?.description }} />
+                  <p className='text-sm text-justify' dangerouslySetInnerHTML={{ __html: product?.description }} />
                 </div>
               )}
             </div>

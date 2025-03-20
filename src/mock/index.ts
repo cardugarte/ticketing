@@ -20,10 +20,18 @@ export const PRODUCT = {
   id: 'Cowork ticket',
   // image: 4/3 aspect ratio
   image:
-    'images/banner2.jpeg',
-  name: `MARTES DE COWORKING 🌯`,
-  description: '¡Reserva tu silla junto a los bitcoiners mas picantes del país!',
-  price: 500,
+    'images/banner3.png',
+  name: `Bitcoin Pizza Day 🍕 Mendoza 2025`,
+  description: `¡Celebra el Bitcoin Pizza Day 2025 en Mendoza!
+Únete a nosotros el 22/05 en [lugar] para conmemorar el histórico día en que se compraron las primeras pizzas pagando con Bitcoin. Disfruta de una tarde llena de pizza, charlas sobre Bitcoin, Nostr y Lightning Network, además networking entre bitcoiners y actividades especiales.
+¿Qué incluye? Deliciosas pizzas, bebidas, ponencias sobre el futuro de Bitcoin y más.
+
+¿Para quién? Entusiastas de Bitcoin, curiosos y amantes de la pizza por igual.
+
+¡No te pierdas esta oportunidad de celebrar la revolución del dinero digital con un buen slice en mano! #BitcoinPizzaDay #Mendoza2025
+
+`,
+  price: 1,
   // currency: only 'SAT'
   currency: 'SAT',
   variants: null,

@@ -13,6 +13,10 @@ export function Footer() {
           <Link className='border-b pb-1' rel='noopener noreferrer' target='_blank' href='https://x.com/fierillo'>
             @fierillo
           </Link>
+          {' | adaptado para BTC Mendoza por — '}
+          <Link className='border-b pb-1' rel='noopener noreferrer' target='_blank' href='https://x.com/cardugarte'>
+            @Carlit0s
+          </Link>
         </p>
       </div>
     </footer>

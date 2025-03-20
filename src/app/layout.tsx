@@ -53,7 +53,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning={true}>
       <body className={`${inter.variable} antialiased`}>
         <div className='relative overflow-x-hidden flex flex-col w-screen min-h-screen bg-background'>{children}</div>
         <Analytics />
